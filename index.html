@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+
+	<head>
+		<meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	  <meta http-equiv="x-ua-compatible" content="ie=edge">
+		<link rel="icon" href="/favicon.ico">
+    <title>slider</title>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+		<!-- Your custom styles (optional) -->
+		<link href="css/style.css" rel="stylesheet">
+		<!-- SCRIPTS -->
+		<!-- JQuery -->
+		<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+	</head>
+
+  <body>
+    <div class="container-fluid" id="flash">
+
+      <div class="row p-3">
+        <div class="col-12 d-flex justify-content-center" id="slidewrapper">
+            <div class="slide"><img src="images/1.jpg"></div>
+            <div class="slide"><img src="images/2.jpg"></div>
+            <div class="slide"><img src="images/3.jpg"></div>
+            <div class="slide"><img src="images/4.jpg"></div>
+            <div class="slide"><img src="images/5.jpg"></div>
+            <div class="slide"><img src="images/6.jpg"></div>
+            <div class="slide"><img src="images/7.jpg"></div>
+            <div class="slide"><img src="images/8.jpg"></div>
+            <div class="slide"><img src="images/9.jpg"></div>
+            <div class="slide"><img src="images/10.jpg"></div>
+            <div class="slide"><img src="images/11.jpg"></div>
+            <div class="slide"><img src="images/12.jpg"></div>
+            <div class="slide"><img src="images/13.jpg"></div>
+            <div class="slide"><img src="images/14.jpg"></div>
+            <div class="slide"><img src="images/15.jpg"></div>
+        </div>
+      </div>
+
+
+      <div class="row d-flex justify-content-start p-3" id="pager">
+        <div class="col-12">
+          <ul id="flash-nav-btns" class="pr-3">
+              <!-- <li class="slide-nav-btn active">1</li>
+              <li class="slide-nav-btn">2</li>
+              <li class="slide-nav-btn">3</li>
+              <li class="slide-nav-btn">4</li> -->
+          </ul>
+        </div>
+      </div>
+
+
+      <div class="row p-3" id="navButtons">
+          <div class="col-12 d-flex justify-content-end">
+            <button id="prev-btn">НАЗАД</button>
+            <button id="next-btn">ДАЛЕЕ</button>
+          </div>
+      </div>
+
+    </div>
+  </body>
+
+  <!-- Скрипты управления -->
+  <script type="text/javascript">
+    var slideNow = 1;
+    var slideCount = $('#slidewrapper').children().length;
+    var navBtnId = 0;
+    var translateWidth = 0;
+
+		//добавляем активный класс первому слайду
+		$('#flash #slidewrapper .slide').eq(0).css("display", "flex").hide().fadeIn(1000);
+
+    for (var i = 0; i < slideCount; i++) {
+        var active = '';
+        if (i == 0){
+          active = 'active';
+        }
+        $('#flash #flash-nav-btns').append('<li class="slide-nav-btn '+ active +'">' + parseInt(i+1) + '</li>')
+    }
+
+    $(document).ready(function() {
+
+        $('#flash #next-btn').on('click',function() {
+            nextSlide();
+        });
+
+        $('#flash #prev-btn').on('click',function() {
+            prevSlide();
+        });
+
+        //DOTS
+        $('#flash .slide-nav-btn').click(function() {
+            navBtnId = $(this).index();
+            $('#flash .slide-nav-btn').removeClass('active');
+            $(this).addClass('active');
+
+            if (navBtnId + 1 != slideNow) {
+								$('#flash #slidewrapper .slide').eq(slideNow -1 ).hide();
+								$('#flash #slidewrapper .slide').eq(navBtnId).css("display", "flex").hide().fadeIn(1000);
+                slideNow = navBtnId + 1;
+            }
+        });
+    });
+
+
+    function nextSlide() {
+        if (slideNow != slideCount) {
+            $('#flash .slide-nav-btn.active').removeClass('active');
+						$('#flash #slidewrapper .slide').eq(slideNow - 1).hide();
+            slideNow++;
+            $('#flash #slidewrapper .slide').eq(slideNow - 1).css("display", "flex").hide().fadeIn(1000);
+            $('#flash .slide-nav-btn').eq(parseInt(slideNow - 1)).addClass('active');
+        }
+    }
+
+    function prevSlide() {
+        if (slideNow != 1 ) {
+          $('#flash .slide-nav-btn.active').removeClass('active');
+					$('#flash #slidewrapper .slide').eq(slideNow - 1).hide();
+          slideNow--;
+          $('#flash #slidewrapper .slide').eq(slideNow - 1).css("display", "flex").hide().fadeIn(1000);
+          $('#flash .slide-nav-btn').eq(parseInt(slideNow - 1)).addClass('active');
+        }
+    }
+
+  </script>
+
+</html>
